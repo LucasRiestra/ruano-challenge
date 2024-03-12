@@ -33,21 +33,39 @@ const Series = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const data = sampleData.entries
-      .filter((item: Entry) => item.programType === 'series' && item.releaseYear >= 2010)
-      .sort((a: Entry, b: Entry) => a.title.localeCompare(b.title))
-      .slice(0, 20)
-      .map(item => ({
-        ...item,
-        images: {
-          'Poster Art': {
-            ...item.images['Poster Art'],
-            url: item.images['Poster Art'].url
-          }
+    const checkImage = (url: string) =>
+      new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+  
+    const loadSeries = async () => {
+      const sortedEntries = sampleData.entries
+        .filter((item: Entry) => item.programType === 'series' && item.releaseYear >= 2010)
+        .sort((a: Entry, b: Entry) => a.title.localeCompare(b.title));
+  
+      const data: Entry[] = [];
+      for (const item of sortedEntries) {
+        const imageExists = await checkImage(item.images['Poster Art'].url);
+        if (imageExists) {
+          data.push({
+            ...item,
+            images: {
+              'Poster Art': {
+                ...item.images['Poster Art'],
+                url: item.images['Poster Art'].url
+              }
+            }
+          });
         }
-      }));
-    setSeries(data);
-    setLoading(false);
+      }
+      setSeries(data);
+      setLoading(false);
+    };
+  
+    loadSeries();
   }, []);
 
   return (
@@ -77,7 +95,7 @@ const Series = () => {
                 {title}
               </div>
             )}
-            height={360 * 4} 
+            height={360 * 2} 
             baseItemHeight={335} 
             baseItemWidth={225}
             itemMargin={10}
