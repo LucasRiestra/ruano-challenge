@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, marginLeft: '10vh', [theme.breakpoints.down('sm')]: { fontSize: '1rem', marginLeft: '2vh' } }}>
+        <Typography variant="h4" component="div" sx={{ flexGrow: 1, marginLeft: '10vh', fontWeight: 'bold', [theme.breakpoints.down('sm')]: { fontSize: '1rem', marginLeft: '2vh' } }}>
           DEMO Streaming
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
