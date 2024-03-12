@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import LoadPanel from 'devextreme-react/load-panel';
 import TileView from 'devextreme-react/tile-view';
+import Popup from 'devextreme-react/popup';
+import { useRecoilState } from 'recoil';
 import sampleData from '../../data/sample.json';
 import './series.css';
 import 'devextreme/dist/css/dx.light.css';
+import { seriesState, loadingState, errorState, popupVisibleState, selectedSeriesState } from '../../recoil/recoilState';
 
 interface PosterArt {
   url: string;
@@ -12,7 +15,7 @@ interface PosterArt {
   height: number;
 }
 
-interface Entry {
+export interface Entry {
   title: string;
   description: string;
   programType: string;
@@ -22,15 +25,12 @@ interface Entry {
   releaseYear: number;
 }
 
-interface Data {
-  total: number;
-  entries: Entry[];
-}
-
 const Series = () => {
-  const [series, setSeries] = useState<Entry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [series, setSeries] = useRecoilState(seriesState);
+  const [loading, setLoading] = useRecoilState(loadingState);
+  const [error, setError] = useRecoilState(errorState);
+  const [popupVisible, setPopupVisible] = useRecoilState(popupVisibleState);
+  const [selectedSeries, setSelectedSeries] = useRecoilState(selectedSeriesState);
 
   useEffect(() => {
     const checkImage = (url: string) =>
@@ -40,33 +40,28 @@ const Series = () => {
         img.onerror = () => resolve(false);
         img.src = url;
       });
-  
+
     const loadSeries = async () => {
       const sortedEntries = sampleData.entries
         .filter((item: Entry) => item.programType === 'series' && item.releaseYear >= 2010)
         .sort((a: Entry, b: Entry) => a.title.localeCompare(b.title));
-  
+
       const data: Entry[] = [];
       for (const item of sortedEntries) {
         const imageExists = await checkImage(item.images['Poster Art'].url);
         if (imageExists) {
-          data.push({
-            ...item,
-            images: {
-              'Poster Art': {
-                ...item.images['Poster Art'],
-                url: item.images['Poster Art'].url
-              }
-            }
-          });
+          data.push(item);
         }
       }
       setSeries(data);
       setLoading(false);
     };
-  
+
     loadSeries();
-  }, []);
+  }, [setSeries, setLoading]);
+
+  
+  console.log(popupVisible);
 
   return (
     <div>
@@ -80,29 +75,66 @@ const Series = () => {
       {loading ? (
         <LoadPanel visible={loading} />
       ) : error ? (
-        <div>Error loading data</div>
+        <div>Oops, something went wrong</div>
       ) : (
-        <div style={{ display: 'flex', justifyContent: 'center' }}> 
-          <TileView
+        <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}> 
+          <TileView className='dx-tile-view'
             dataSource={series}
-            itemRender={({ title, images }) => (
-              <div 
-                className="dx-tile-image" 
-                style={{ 
-                  backgroundImage: `url(${images['Poster Art'].url})`,
+            itemRender={({ title, description, releaseYear, images }) => (
+              <div
+                onMouseOver={(e) => {
+                  e.currentTarget.style.opacity = '0.5';
+                  e.currentTarget.style.border = '1px solid white';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.border = 'none';
+                }}
+                onClick={() => {
+                  setSelectedSeries({ title, description, releaseYear, images, programType: 'series'});
+                  setPopupVisible(true);
                 }}
               >
-                {title}
+                <img 
+                  className="dx-tile-image" 
+                  src={images['Poster Art'].url}
+                  alt={title}
+                />
+                <div 
+                  style={{ textAlign: 'center', marginTop: '0px' }}
+                >
+                  {title}
+                </div>
               </div>
             )}
-            height={360 * 2} 
-            baseItemHeight={335} 
+            width={225 * 4}
+            height={360 * 4} 
+            baseItemHeight={360} 
             baseItemWidth={225}
             itemMargin={10}
           />
         </div>
       )}
+            <Popup
+  visible={popupVisible}
+  onHiding={() => setPopupVisible(false)}
+  dragEnabled={false}
+  closeOnOutsideClick={true}
+  showTitle={true}
+  title={selectedSeries?.title}
+  width={400}
+  height={700}
+>
+  {selectedSeries && (
+    <div>
+      <img style={{ borderRadius: '10px', alignItems:'center', justifyContent:'center', width: '39vh', height: '49vh' }} src={selectedSeries?.images['Poster Art'].url} alt={selectedSeries.title} />
+      <p>{selectedSeries?.description}</p>
+      <p>{selectedSeries?.releaseYear}</p>
     </div>
+  )}
+</Popup>
+    </div>
+    
   );
 };
 
