@@ -3,6 +3,8 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 import LoadPanel from 'devextreme-react/load-panel';
 import TileView from 'devextreme-react/tile-view';
 import sampleData from '../../data/sample.json';
+import './series.css';
+import 'devextreme/dist/css/dx.light.css';
 
 interface PosterArt {
   url: string;
@@ -24,15 +26,6 @@ interface Data {
   total: number;
   entries: Entry[];
 }
-
-const SeriesImage = (data: Entry) => (
-  <div 
-    className="dx-tile-image" 
-    style={{ backgroundImage: `url(${data.images['Poster Art'].url})` }}
-  >
-    {data.title}
-  </div>
-);
 
 const Series = () => {
   const [series, setSeries] = useState<Entry[]>([]);
@@ -71,10 +64,25 @@ const Series = () => {
       ) : error ? (
         <div>Error loading data</div>
       ) : (
-        <TileView
-          items={series}
-          itemRender={SeriesImage}
-        />
+        <div style={{ display: 'flex', justifyContent: 'center' }}> 
+          <TileView
+            dataSource={series}
+            itemRender={({ title, images }) => (
+              <div 
+                className="dx-tile-image" 
+                style={{ 
+                  backgroundImage: `url(${images['Poster Art'].url})`,
+                }}
+              >
+                {title}
+              </div>
+            )}
+            height={360 * 4} 
+            baseItemHeight={335} 
+            baseItemWidth={225}
+            itemMargin={10}
+          />
+        </div>
       )}
     </div>
   );
