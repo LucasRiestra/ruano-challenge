@@ -32,6 +32,6 @@ export const selectedMovieState = atom({
   });
 
   export const movieState = atom({
-    key: 'seriesState',
+    key: 'movieState',
     default: [] as Entry[],
   });

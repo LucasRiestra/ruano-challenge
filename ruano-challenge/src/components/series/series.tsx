@@ -47,11 +47,9 @@ const Series = () => {
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.opacity = '0.5';
-                  e.currentTarget.style.border = '1px solid white';
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.opacity = '1';
-                  e.currentTarget.style.border = 'none';
                 }}
                 onClick={() => {
                   setSelectedSeries({ title, description, releaseYear, images, programType: 'series'});

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), url('https://res.cloudinary.com/dtqgzojs3/image/upload/v1710326962/cinema-film-doodle-set-movie-elements-in-sketch-style-camera-film-strip-popcorn-clapperboard-ticket-hand-drawn-illustration-isolated-on-white-background-vector_ocpydg.jpg');
 }
 
 code {

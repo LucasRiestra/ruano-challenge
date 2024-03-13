@@ -49,7 +49,7 @@ const Movies = () => {
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.opacity = '1';
-                  e.currentTarget.style.border = 'none';
+                  e.currentTarget.style.border = '1px solid white';
                 }}
                 onClick={() => {
                   setSelectedMovie({ title, description, releaseYear, images, programType: 'series'});
