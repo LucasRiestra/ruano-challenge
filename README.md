@@ -63,6 +63,9 @@ Para ejecutar la aplicación, siga estos pasos:
 
 5) Para ejecutar pruebas unitarias, utilizar npx jest.
 
+## Deploy
+  El despliegue se ha realizado en vercel y aqui pueden acceder a el https://ruano-challenge.vercel.app/
+
 ## Conclusiones 
 
 El proyecto lo he desarrollado cumpliendo con los requisitos establecidos, utilizando herramientas modernas y aplicando buenas prácticas de desarrollo. La organización del código y la atención a los detalles fueron aspectos clave en la entrega de la solución. Me ha gustado mucho este challenge porque he aprendido de tecnologias que no conocia, como DevExtreme, recoil y un poco mas a fondo MaterialUI.
