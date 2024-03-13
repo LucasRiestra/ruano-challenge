@@ -28,11 +28,17 @@ app.tsx, index.tsx: Archivos principales de la aplicación.
 ## Desarrollo y Lógica
 
 -Lo primero fue leer la documentación de DevExtreme, Recoil y Material-UI para establecer las bases del proyecto.
+
 -Lo segundo la estructura del proyecto y se instalaron las dependencias necesarias.
+
 -Luego desarrollar la lógica de la aplicación, centrándose en la renderización de series y películas, y en la gestión de imágenes.
+
 -Para evitar imágenes que no funcionaban, se implementó una función que filtra solo las imágenes válidas al cargar los datos desde la base de datos. Esto esta en una rama aparte. Luego se continuo el proyecto renderizando un placeholder en las imagenes que daban fallos
+
 -Se utilizaron custom hooks para filtrar, ordenar y paginar los datos, como el hook useMovies y useSeries.
+
 -Se implementó un loader de DevExtreme para mejorar la experiencia del usuario al cargar películas o series.
+
 -Se creó un componente externo de filtro reutilizable en las páginas de películas y series.
 
 
