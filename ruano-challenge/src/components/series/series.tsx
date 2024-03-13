@@ -71,7 +71,7 @@ const Series = () => {
                 </div>
               </div>
             )}
-            width={300 * 5.8}
+            width={300 * 4.1}
             height={360 * 4} 
             baseItemHeight={360} 
             baseItemWidth={225}
@@ -85,7 +85,7 @@ const Series = () => {
           variant="contained" 
           component={Link} 
           to="/"
-          style={{ backgroundColor: '#333', color: '#fff', display: 'flex', justifyContent: 'center', width: '20vh', margin:'0 auto', marginBottom: '6vh'}}
+          style={{ backgroundColor: '#333', color: '#fff', display: 'flex', justifyContent: 'center', width: '40vh', margin:'0 auto', marginBottom: '6vh'}}
             >
           Back to Home
         </Button>

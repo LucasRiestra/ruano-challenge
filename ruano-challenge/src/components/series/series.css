@@ -6,3 +6,18 @@
     background-repeat: no-repeat; 
     display: block;
   }
+
+  @media (max-width: 550px) {
+    a{
+        text-decoration: none;
+    }
+
+    .tile-container {
+        grid-template-columns: 1fr;
+    }
+
+    .tile-item {
+        width: 30vh;
+        height: 40vh;
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import LoadPanel from 'devextreme-react/load-panel';
 import TileView from 'devextreme-react/tile-view';
 import Popup from 'devextreme-react/popup';
@@ -17,6 +17,8 @@ const Movies = () => {
   const [selectedMovie, setSelectedMovie] = useRecoilState(selectedMovieState);
   const { movies, loading, error, setMovies } = useMovies(sampleData, currentPage);
 
+  const matches = useMediaQuery('(max-width:600px, max-height: 900px)');
+
   return (
     <div>
       <AppBar position="static" sx={{ backgroundColor: '#333' }}>
@@ -33,7 +35,7 @@ const Movies = () => {
         <div>Oops, something went wrong</div>
       ) : (
         <div>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> 
+        <div className='tile-container' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> 
           <TileView
             dataSource={movies}
             itemRender={({ title, description, releaseYear, images }) => (
@@ -71,7 +73,7 @@ const Movies = () => {
                 </div>
               </div>
             )}
-            width={300 * 5.8}
+            width={300 * 4.1}
             height={360 * 4} 
             baseItemHeight={360} 
             baseItemWidth={225}
@@ -85,7 +87,7 @@ const Movies = () => {
           variant="contained" 
           component={Link} 
           to="/"
-          style={{ backgroundColor: '#333', color: '#fff', display: 'flex', justifyContent: 'center', width: '20vh', margin:'0 auto', marginBottom: '6vh'}}
+          style={{ backgroundColor: '#333', color: '#fff', display: 'flex', justifyContent: 'center', width: '40vh', margin:'0 auto', marginBottom: '6vh', textAlign: 'center'}}
             >
           Back to Home
         </Button>
