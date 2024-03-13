@@ -12,7 +12,6 @@
     "@types/devextreme": "^16.2.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.88",
-    "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.21",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.7",
@@ -51,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.23.3"
+    "@babel/preset-react": "^7.23.3",
+    "@types/react": "^18.2.65"
   }
 }

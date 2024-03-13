@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface PosterArt {
     url: string;
     width: number;
@@ -20,4 +22,17 @@ export interface PosterArt {
     image: string;
     subtitle: string;
     location: string;
+  }
+
+  export interface SampleData {
+    entries: Entry[];
+  }
+
+  export interface FilterProps {
+    items: Entry[];
+    setItems: React.Dispatch<React.SetStateAction<Entry[]>>;
+  }
+
+  export interface PaginationProps {
+    children: (props: { currentPage: number; nextPage: () => void; prevPage: () => void; }) => ReactElement;
   }
