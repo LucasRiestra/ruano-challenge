@@ -1,119 +1,64 @@
-[ ![](assets/white_textlogo_black_background.png)](url)
-
 # Prueba técnica — React developer
 
+## Descripción
 
-## Objetivo
+Este proyecto es parte de una prueba técnica para evaluar habilidades en el desarrollo front-end utilizando React, TypeScript y herramientas como DevExtreme y Recoil. El objetivo principal es construir una aplicación que muestre series y películas, con funcionalidades como filtrado y paginación.
 
-El objetivo de esta prueba técnica es que el candidato muestre sus habilidades con las herramientas que utilizará luego en su trabajo diario en Devontic. Está diseñado para verificar las habilidades de desarrollo front-end utilizando React y TypeScript para validar capacidades de resolver problemas.
+## Organización del Proyecto
 
-Pondremos el foco en obtener un **código simple, bien diseñado y organizado, eficaz y testeado**, así como el cumplimiento de todos los requerimientos solicitados.
+Para llevar a cabo este proyecto, se siguieron los siguientes pasos:
 
+Organización de Carpetas
+El repositorio principal contiene la carpeta ruano-challenge, que alberga todo el proyecto. La estructura de carpetas dentro de ruano-challenge es la siguiente:
 
-## Desarrollo del proyecto
+package.json: Archivo de configuración del proyecto.
+node_modules: Carpeta que contiene las dependencias del proyecto.
 
-- Se deberá clonar este repositorio para poder modificarlo y completarlo con la resolución del proyecto.
-- Una vez que su código esté listo, suba el código a un repositorio público propio y envíenos el enlace a dicho repositorio para que lo revisaremos.
+-assets: Carpeta que almacena imágenes y otros recursos.
+-public: Archivos públicos, como íconos y HTML principal.
+-src: Directorio principal del código fuente.
+-data: Contiene archivos de datos, como el JSON proporcionado.
+-components: Componentes de React reutilizables.
+-hooks: Hooks personalizados para la lógica de la aplicación.
+-interfaces: Interfaces TypeScript para mantener la tipificación.
+-recoil: Configuración y estados globales de Recoil.
 
-> Se debe crear un proyecto de react con el framerwork Next.js => https://nextjs.org/docs/getting-started.
+app.tsx, index.tsx: Archivos principales de la aplicación.
 
+## Desarrollo y Lógica
 
-## Prueba técnica
-Usando la estructura vista en las imágenes proporcionadas como referencia, deberá crear un conjunto de pantallas y componentes React para crear la aplicación solicitada.
-
-Se deberá incluir también `README` con instrucciones de configuración/ejecución y cualquier prueba u otra documentación que haya creado como parte de su solución.
-
-Además, agregue la siguiente información a su archivo `README`:
-
-- ¿Cómo decidió las opciones técnicas y arquitectónicas utilizadas como parte de su solución?
-- ¿Hay alguna mejora que pueda hacer en su envío?
-- ¿Qué haría de manera diferente si se le asignara más tiempo?
+-Lo primero fue leer la documentación de DevExtreme, Recoil y Material-UI para establecer las bases del proyecto.
+-Lo segundo la estructura del proyecto y se instalaron las dependencias necesarias.
+-Luego desarrollar la lógica de la aplicación, centrándose en la renderización de series y películas, y en la gestión de imágenes.
+-Para evitar imágenes que no funcionaban, se implementó una función que filtra solo las imágenes válidas al cargar los datos desde la base de datos. Esto esta en una rama aparte. Luego se continuo el proyecto renderizando un placeholder en las imagenes que daban fallos
+-Se utilizaron custom hooks para filtrar, ordenar y paginar los datos, como el hook useMovies y useSeries.
+-Se implementó un loader de DevExtreme para mejorar la experiencia del usuario al cargar películas o series.
+-Se creó un componente externo de filtro reutilizable en las páginas de películas y series.
 
 
 ## Detalles
-Necesitará construir las siguientes 3 páginas con React:
+He construido las siguientes 3 páginas con React:
 
 - Una página de "Inicio"
 - Una página de "Series"
-- Una página "Películas"
+- Una página "Movies"
 
-Cree componentes para cada parte de la página (por ejemplo, encabezado, contenido, pie de página, etc.). Dentro de la carpeta `/assets` podrá encontrar distintas imágenes para utilizar.
+## Instalación y Ejecución
 
-Las páginas también deben poder utilizarse en dispositivos móviles.
+Para ejecutar la aplicación, siga estos pasos:
 
-Puede suponer que no tiene que admitir navegadores heredados sin funciones como `fetch` o `flexbox`.
+1) Clonar el repositorio desde GitHub https://github.com/LucasRiestra/ruano-challenge/
 
+2) cd a la carpeta "ruano-challenge"
 
-### Página de “Inicio”
+3) Ejecutar npm install para instalar las dependencias.
 
-> Ejemplo de referencia [screens/1-home.jpg](./screens/1-home.jpg).
+4) Iniciar la aplicación con npm run start.
 
-Esta será su pantalla index.html.
+5) Para ejecutar pruebas unitarias, utilizar npx jest.
 
-Deberá mostrar 2 bloques que conectarán con las páginas de "Series" y "Películas".
+## Conclusiones 
 
+El proyecto lo he desarrollado cumpliendo con los requisitos establecidos, utilizando herramientas modernas y aplicando buenas prácticas de desarrollo. La organización del código y la atención a los detalles fueron aspectos clave en la entrega de la solución. Me ha gustado mucho este challenge porque he aprendido de tecnologias que no conocia, como DevExtreme, recoil y un poco mas a fondo MaterialUI.
 
-### Páginas de “Serie” y “Películas”
-
-> Ejemplo de referencia [screens/2-series.jpg](./screens/2-series.jpg) y [screens/3-movies.jpg](./screens/3-movies.jpg).
-
-Para cada página debería leer los datos desde el archivo JSON [feed/sample.json](https://raw.githubusercontent.com/StreamCo/react-coding-challenge/master/feed/sample.json), luego:
-
-- Mostrar los primeros 20 resultados (`entries`). No es necesario paginar para ver más resultados. 
-- Mostrar sólo si contienen el atributo `releaseYear` >= `2010`
-- Ordenar los resultados por el atributo `title` de manera ascendente con órden alfanumérico
-- Para la página de "Series" usar resultados con `programType` igual a `series`.
-- Para la página de "Películas" usar resultados con `programType` igual a `movie`. 
-- Los atributos que debes utilizar para mostrar en la caja de cada resultado son:
-  - `title`
-  - `images` → `Poster Art` → `url`
-- Al posicionar el mouse sobre cada resultado la caja debe reducir su opacidad y mostrar borde blanco.
-- Al hacer click sobre el titulo deberá abrirse un popup mostrando la información completa:
-  - `title`
-  - `description`
-  - `releaseYear`
-  - `images` → `Poster Art` → `url`
-
-
-### Otras consideraciones
-
-También necesitará manejar los estados de carga/loading y error de obtener los datos desde el archivo JSON:
-
-- Estado de "Carga/Loading" [screens/1.1-loading.jpg](./screens/1.1-loading.jpg)
-- Estado de "Error" [screens/1.2-error.jpg](./screens/1.2-error.jpg)
-
-
-#### Opcional
-
-- Filtro por año
-  - agregar arriba del listado de series/películas un input que permita filtrar películas por año.
-- Paginación
-  - agregar un selector de cantidad de resultados a mostrar (5, 10, 20)
-  - permitir ir a próxima página de resultados o página anterior
-  - permitir moverse de página en página utilizando un parámetro en la URL
-
-
-## Requisitos de Stack
-
-Para el desarrollo de la aplicación deberá utilizar:
-
-- React / React Hooks
-- Recoil => https://recoiljs.org/
-- Librería de estilos https://mui.com/
-- Mobile friendly
-- TypeScript
-- Manejo de errores
-- _(opcional)_ Unit tests (jest, react-testing-library, o similar)
-- _(opcional)_ Integration/E2E tests
-- _(opcional)_ Deploy automático
-- _(opcional)_ ...
-
-Importante saber:
-- No es necesario crear un entorno de desarrollo/producción.
-- Se pueden utilizar otras librerías que crea conveniente, aunque se recomienda proporcionar una solución básica ajustada a lo solicitado, ya que nuestro objetivo principal es evaluar sus habilidades con React y TypeScript.
-- Como empresa, creemos que la comunicación es la clave del éxito. Entonces, si algo no está claro, o si tiene dudas sobre la tarea, consultanos!
-
-
-> Happy coding!
-
-<img src="https://user-images.githubusercontent.com/5693916/30273942-84252588-96fb-11e7-9420-5516b92cb1f7.gif" width="100">
+¡Gracias por la oportunidad de participar en esta prueba técnica!
