@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { Entry } from '../components/series/series';
+import { Entry } from '../interfaces/interfaces';
 
 export const seriesState = atom({
   key: 'seriesState',
@@ -25,3 +25,13 @@ export const selectedSeriesState = atom({
   key: 'selectedSeriesState',
   default: null as Entry | null,
 });
+
+export const selectedMovieState = atom({
+    key: 'selectedMoviesState',
+    default: null as Entry | null,
+  });
+
+  export const movieState = atom({
+    key: 'seriesState',
+    default: [] as Entry[],
+  });

@@ -3,14 +3,8 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LoadPanel from 'devextreme-react/load-panel';
 import './home.css';
-
-interface CardData {
-  id: number;
-  text: string;
-  image: string;
-  subtitle: string;
-  location: string;
-}
+import 'devextreme/dist/css/dx.light.css';
+import { CardData } from '../../interfaces/interfaces';
 
 const cardData: CardData[] = [
   { 

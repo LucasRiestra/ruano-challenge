@@ -4,8 +4,12 @@ import Home from '../src/components/home/home';
 import Series from '../src/components/series/series';
 import Movies from './components/movies/movies';
 import Header from './components/header/header';
+import { useLoadPrograms } from './hooks/useLoadPrograms';
 
 function App() {
+  useLoadPrograms('movie');
+  useLoadPrograms('series');
+
   return (
     <RecoilRoot>
       <Router>

@@ -8,22 +8,8 @@ import sampleData from '../../data/sample.json';
 import './series.css';
 import 'devextreme/dist/css/dx.light.css';
 import { seriesState, loadingState, errorState, popupVisibleState, selectedSeriesState } from '../../recoil/recoilState';
+import { useLoadPrograms } from '../../hooks/useLoadPrograms';
 
-interface PosterArt {
-  url: string;
-  width: number;
-  height: number;
-}
-
-export interface Entry {
-  title: string;
-  description: string;
-  programType: string;
-  images: {
-    'Poster Art': PosterArt;
-  };
-  releaseYear: number;
-}
 
 const Series = () => {
   const [series, setSeries] = useRecoilState(seriesState);
@@ -32,36 +18,7 @@ const Series = () => {
   const [popupVisible, setPopupVisible] = useRecoilState(popupVisibleState);
   const [selectedSeries, setSelectedSeries] = useRecoilState(selectedSeriesState);
 
-  useEffect(() => {
-    const checkImage = (url: string) =>
-      new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = url;
-      });
-
-    const loadSeries = async () => {
-      const sortedEntries = sampleData.entries
-        .filter((item: Entry) => item.programType === 'series' && item.releaseYear >= 2010)
-        .sort((a: Entry, b: Entry) => a.title.localeCompare(b.title));
-
-      const data: Entry[] = [];
-      for (const item of sortedEntries) {
-        const imageExists = await checkImage(item.images['Poster Art'].url);
-        if (imageExists) {
-          data.push(item);
-        }
-      }
-      setSeries(data);
-      setLoading(false);
-    };
-
-    loadSeries();
-  }, [setSeries, setLoading]);
-
-  
-  console.log(popupVisible);
+  useLoadPrograms('series');
 
   return (
     <div>
@@ -77,11 +34,16 @@ const Series = () => {
       ) : error ? (
         <div>Oops, something went wrong</div>
       ) : (
-        <div style={{display: 'grid', justifyContent: 'center', alignItems: 'center'}}> 
-          <TileView className='dx-tile-view'
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}> 
+          <TileView
             dataSource={series}
             itemRender={({ title, description, releaseYear, images }) => (
               <div
+              style={{
+                display: 'grid',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.opacity = '0.5';
                   e.currentTarget.style.border = '1px solid white';
@@ -107,15 +69,14 @@ const Series = () => {
                 </div>
               </div>
             )}
-            width={225 * 4}
+            width={285 * 5}
             height={360 * 4} 
             baseItemHeight={360} 
             baseItemWidth={225}
-            itemMargin={10}
           />
         </div>
       )}
-            <Popup
+           <Popup
   visible={popupVisible}
   onHiding={() => setPopupVisible(false)}
   dragEnabled={false}
@@ -123,15 +84,20 @@ const Series = () => {
   showTitle={true}
   title={selectedSeries?.title}
   width={400}
-  height={700}
+  height={550}
 >
-  {selectedSeries && (
+  
     <div>
-      <img style={{ borderRadius: '10px', alignItems:'center', justifyContent:'center', width: '39vh', height: '49vh' }} src={selectedSeries?.images['Poster Art'].url} alt={selectedSeries.title} />
+      {selectedSeries?.images['Poster Art'] && (
+        <img 
+          style={{ borderRadius: '10px', alignItems:'center', justifyContent:'center', display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50%'}} 
+          src={selectedSeries.images['Poster Art'].url} 
+          alt={selectedSeries.title} 
+        />
+      )}
       <p>{selectedSeries?.description}</p>
       <p>{selectedSeries?.releaseYear}</p>
     </div>
-  )}
 </Popup>
     </div>
     
